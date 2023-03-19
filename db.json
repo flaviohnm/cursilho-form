@@ -1,0 +1,48 @@
+{
+  "estadocivil": [
+    {
+      "id": 1,
+      "name": "Solteiro"
+    },
+    {
+      "id": 2,
+      "name": "Casado"
+    },
+    {
+      "id": 3,
+      "name": "Divorciado"
+    },
+    {
+      "id": 4,
+      "name": "Viuvo"
+    }
+  ],
+  "transport": [
+    {
+      "id": 1,
+      "name": "Onibus"
+    },
+    {
+      "id": 2,
+      "name": "Próprio"
+    }
+  ],
+  "igreja": [
+    {
+      "id": 1,
+      "name": "PAES PIEDADE"
+    },
+    {
+      "id": 2,
+      "name": "PAES CABO"
+    },
+    {
+      "id": 3,
+      "name": "ANGLICANA ESPERANÇA"
+    },
+    {
+      "id": 4,
+      "name": "ANGLICANA ZONA NORTE"
+    }
+  ]
+}
