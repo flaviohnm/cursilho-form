@@ -4,13 +4,12 @@ import SubmitButton from '../form/SubmitButton';
 import StepForm from '../hooks/StepForm';
 import AddressForm from './AddressForm';
 import styles from './CursilhistaForm.module.css';
-import EmergencyForm from './EmergencyForm';
 import SocialForm from './SocialForm';
 import Steps from './Steps';
 import TransportForm from './TransportForm';
 import UserForm from './UserForm';
 
-function ProjectForm({ handleSubmit, btnText, cursilhistaData }) {
+function CursilhistaForm({ handleSubmit, btnText, cursilhistaData }) {
 
     const [cursilhista, setCursilhista] = useState(cursilhistaData || [])
 
@@ -20,11 +19,14 @@ function ProjectForm({ handleSubmit, btnText, cursilhistaData }) {
         })
     }
 
+    function handleChange(e) {
+        return setCursilhista({ ...cursilhista, [e.target.name]: e.target.value })
+    }
+
     const formComponents = [
         <UserForm cursilhista={cursilhista} updateFieldHandler={updateFieldHandler} />,
         <AddressForm cursilhista={cursilhista} updateFieldHandler={updateFieldHandler} />,
         <SocialForm cursilhista={cursilhista} updateFieldHandler={updateFieldHandler} />,
-        <EmergencyForm cursilhista={cursilhista} updateFieldHandler={updateFieldHandler} />,
         <TransportForm cursilhista={cursilhista} updateFieldHandler={updateFieldHandler} />
     ]
 
@@ -37,9 +39,6 @@ function ProjectForm({ handleSubmit, btnText, cursilhistaData }) {
         handleSubmit(cursilhista)
     }
 
-    function handleChange(e) {
-        setCursilhista({ ...cursilhista, [e.target.name]: e.target.value })
-    }
 
     return (
         <div className={styles.form_container}>
@@ -67,4 +66,4 @@ function ProjectForm({ handleSubmit, btnText, cursilhistaData }) {
     )
 }
 
-export default ProjectForm
+export default CursilhistaForm

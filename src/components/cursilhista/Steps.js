@@ -16,9 +16,6 @@ function Steps({ currentStep }) {
                 <RiTeamFill />
             </div>
             <div className={`step ${currentStep >= 3 ? "active" : ""}`}>
-                <MdContactEmergency />
-            </div>
-            <div className={`step ${currentStep >= 4 ? "active" : ""}`}>
                 <RiCarFill />
             </div>
         </div>
