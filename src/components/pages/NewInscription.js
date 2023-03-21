@@ -3,7 +3,7 @@ import CursilhistaForm from '../cursilhista/CursilhistaForm'
 import styles from './NewInscription.module.css'
 
 function NewInscription() {
-    
+
     const navigate = useNavigate()
 
     function createPost(cursilhista) {
@@ -24,7 +24,7 @@ function NewInscription() {
     }
 
     return (
-        <div className={styles.newproject_container}>
+        <div className={styles.newinscription_container}>
             <h1>Formulário de Inscrição</h1>
             <CursilhistaForm handleSubmit={createPost} btnText="enviar" />
         </div>

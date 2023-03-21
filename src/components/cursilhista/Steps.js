@@ -1,4 +1,3 @@
-import { MdContactEmergency } from 'react-icons/md'
 import { RiCarFill, RiMapPinFill, RiTeamFill, RiUserFill } from 'react-icons/ri'
 import './Steps.css'
 
