@@ -8,7 +8,7 @@ function NewInscription() {
 
     function createPost(cursilhista) {
 
-        fetch('http://localhost:3001/projects', {
+        fetch('http://localhost:3002/cursilhista', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

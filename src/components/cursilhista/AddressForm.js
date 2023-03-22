@@ -1,46 +1,56 @@
 import { useState } from 'react';
 import Input from '../form/Input';
-import Message from '../layout/Message';
-import styles from './CursilhistaForm.module.css';
+import Loading from '../layout/Loading';
 
-function AddressForm({ cursilhista, submit, updateFieldHandler }) {
+function AddressForm({ cursilhista, updateFieldHandler }) {
 
-    const [cepConsultado, setCepConsultado] = useState([])
-    const [message, setMessage] = useState()
-    const [type, setType] = useState()
+    //const [ceps, setCeps] = useState(null)
+    const [removeLoading, setRemoveLoading] = useState(false)
 
-    const checkCEP = (e) => {
-        setMessage('')
+    function preecherForm(data) {
+        cursilhista.logradouro = data.logradouro;
+        cursilhista.bairro = data.bairro
+        cursilhista.cidade =data.localidade;
+        cursilhista.uf = data.uf;
+    }
+
+
+    const buscaCEP = (e) => {
+        setRemoveLoading('');
         const cep = e.target.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');
-        fetch(`https://viacep.com.br/ws/${cep}/json`)
-            .then((resp) => resp.json())
-            .then(data => {
-                setCepConsultado(data);
-                cursilhista.logradouro = cepConsultado.logradouro
-                cursilhista.bairro = cepConsultado.bairro
-                cursilhista.localidade = cepConsultado.localidade
-                cursilhista.uf = cepConsultado.uf
-                setMessage('CEP Encontrado!')
-                setType('success')
-            })
-            .catch((err) => console.log(err))
+        if (cep !== "" && cep.length === 8) {
+            setRemoveLoading(false)
+            setTimeout(() => {
+                fetch(`https://viacep.com.br/ws/${cep}/json`)
+                    .then((resp) => resp.json())
+                    .then(data => {
+                        preecherForm(data);
+                    },)
+                    .catch((err) => {
+                        console.log("Erro: " + err);
+                    })
+                    .finally(() => setRemoveLoading(false))
+            }, 50)
+            setRemoveLoading(true)
+        }
     }
 
     return (
-        <form className={styles.form}>
-            {message && <Message type={type} msg={message} />}
+        <div>
+            {removeLoading && <Loading />}
             <Input
                 type="text"
                 text="CEP"
                 name="cep"
                 placeholder="Digite o CEP, apenas números"
                 handleOnchange={(e) => updateFieldHandler("cep", e.target.value)}
-                onBlur={checkCEP}
+                onBlur={buscaCEP}
                 value={cursilhista.cep || ""}
             />
             <Input
                 type="text"
                 text="Rua"
+                id="logradouro"
                 name="logradouro"
                 placeholder="Informe o nome da rua"
                 handleOnchange={(e) => updateFieldHandler("logradouro", e.target.value)}
@@ -49,7 +59,7 @@ function AddressForm({ cursilhista, submit, updateFieldHandler }) {
             <Input
                 type="text"
                 text="Número"
-                name="number"
+                name="numero"
                 placeholder="Informe o número"
                 handleOnchange={(e) => updateFieldHandler("number", e.target.value)}
                 value={cursilhista.number || ""}
@@ -57,14 +67,15 @@ function AddressForm({ cursilhista, submit, updateFieldHandler }) {
             <Input
                 type="text"
                 text="Complemento"
-                name="complement"
+                name="complemento"
                 placeholder="Informe o complemento"
                 handleOnchange={(e) => updateFieldHandler("complement", e.target.value)}
-                value={cursilhista.complement || ""}
+                value={cursilhista.complemento || ""}
             />
             <Input
                 type="text"
                 text="Bairro"
+                id="bairro"
                 name="bairro"
                 placeholder="Informe o nome o Bairro"
                 handleOnchange={(e) => updateFieldHandler("bairro", e.target.value)}
@@ -73,20 +84,22 @@ function AddressForm({ cursilhista, submit, updateFieldHandler }) {
             <Input
                 type="text"
                 text="Cidade"
-                name="localidade"
+                id="cidade"
+                name="cidade"
                 placeholder="Informe o nome da cidade"
                 handleOnchange={(e) => updateFieldHandler("localidade", e.target.value)}
-                value={cursilhista.localidade || ""}
+                value={cursilhista.cidade || ""}
             />
             <Input
                 type="text"
                 text="Estado"
+                id="uf"
                 name="uf"
                 placeholder="Informe o nome da cidade"
                 handleOnchange={(e) => updateFieldHandler("uf", e.target.value)}
                 value={cursilhista.uf || ""}
             />
-        </form>
+        </div>
     )
 
 }

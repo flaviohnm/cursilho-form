@@ -1,10 +1,9 @@
 import Input from '../form/Input'
-import styles from './CursilhistaForm.module.css'
 
 function UserForm({ cursilhista, submit, updateFieldHandler }) {
 
     return (
-        <form className={styles.form}>
+        <div>
             <Input
                 type="text"
                 text="Nome Completo"
@@ -52,7 +51,7 @@ function UserForm({ cursilhista, submit, updateFieldHandler }) {
                 handleOnchange={(e) => updateFieldHandler("birthDate", e.target.value)}
                 value={cursilhista.birthDate || ""}
             />
-        </form>
+        </div>
     )
 }
 

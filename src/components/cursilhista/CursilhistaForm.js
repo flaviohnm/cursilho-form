@@ -19,10 +19,6 @@ function CursilhistaForm({ handleSubmit, btnText, cursilhistaData }) {
         })
     }
 
-    function handleChange(e) {
-        return setCursilhista({ ...cursilhista, [e.target.name]: e.target.value })
-    }
-
     const formComponents = [
         <UserForm cursilhista={cursilhista} updateFieldHandler={updateFieldHandler} />,
         <AddressForm cursilhista={cursilhista} updateFieldHandler={updateFieldHandler} />,
@@ -42,8 +38,8 @@ function CursilhistaForm({ handleSubmit, btnText, cursilhistaData }) {
     return (
         <div className={styles.form_container}>
             <Steps currentStep={currentStep} />
-            <form onSubmit={(e) => changeStep(currentStep + 1, e)}>
-                <div>{currentComponent}</div>
+            <form onSubmit={submit}>
+                <div className={styles.form}>{currentComponent}</div>
                 <div className={styles.actions}>
                     {!isFirstStep && (
                         <button className={styles.btn} type="button" onClick={() => changeStep(currentStep - 1)}>
@@ -52,12 +48,12 @@ function CursilhistaForm({ handleSubmit, btnText, cursilhistaData }) {
                         </button>
                     )}
                     {!isLastStep ? (
-                        <button className={styles.btn} type="submit">
+                        <button className={styles.btn} type="button" onClick={() => changeStep(currentStep + 1)}>
                             <span>Avançar</span>
                             <GrFormNext />
                         </button>
                     ) : (
-                        <SubmitButton text={btnText} />
+                        <SubmitButton text={btnText} type="submit" />
                     )}
                 </div>
             </form>

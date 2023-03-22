@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react';
 import Input from '../form/Input';
 import Select from '../form/Select';
-import styles from './CursilhistaForm.module.css';
 
 
-function SocialForm({ cursilhista, submit, updateFieldHandler }) {
+function SocialForm({ cursilhista, updateFieldHandler }) {
 
     const [estadoCivil, setEstadoCivil] = useState([])
 
@@ -24,7 +23,7 @@ function SocialForm({ cursilhista, submit, updateFieldHandler }) {
 
 
     return (
-        <form className={styles.form}>
+        <div>
             <Select
                 name="estadocivil"
                 text="Estado Civil"
@@ -68,7 +67,7 @@ function SocialForm({ cursilhista, submit, updateFieldHandler }) {
                 handleOnchange={(e) => updateFieldHandler("emergencyPhoneNumber", e.target.value)}
                 value={cursilhista.emergencyPhoneNumber || ""}
             />
-        </form>
+        </div>
     )
 }
 

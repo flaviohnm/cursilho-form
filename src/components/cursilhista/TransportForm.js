@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import Select from '../form/Select';
-import styles from './CursilhistaForm.module.css';
 
 function TransportForm({ cursilhista, submit, updateFieldHandler }) {
 
@@ -22,7 +21,7 @@ function TransportForm({ cursilhista, submit, updateFieldHandler }) {
     }, [])
 
     return (
-        <form className={styles.form}>
+        <div >
             <Select
                 name="transport"
                 text="Transporte"
@@ -30,7 +29,7 @@ function TransportForm({ cursilhista, submit, updateFieldHandler }) {
                 handleOnchange={(e) => updateFieldHandler("transport", e.target.value)}
                 value={cursilhista.transport || ""}
             />
-        </form>
+        </div>
     )
 
 }
