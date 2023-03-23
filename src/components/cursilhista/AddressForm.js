@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import styles from '../cursilhista/CursilhistaForm.module.css';
 import Input from '../form/Input';
-import InputCep from '../form/InputCep';
+import InputCustomMask from '../form/InputCustomMask';
 import Loading from '../layout/Loading';
 import Message from '../layout/Message';
 
@@ -64,10 +64,11 @@ function AddressForm({ cursilhista, handleChange }) {
         <div>
             {removeLoading && <Loading />}
             {message && <Message type={type} msg={message} />}
-            <InputCep
+            <InputCustomMask
                 type="text"
                 text="CEP"
                 name="cep"
+                mask={'99999-999'}
                 placeholder="Digite o CEP, apenas números"
                 handleOnchange={handleChange}
                 onBlur={buscaCEP}
@@ -122,7 +123,7 @@ function AddressForm({ cursilhista, handleChange }) {
                     />
                 </div>
                 <div className={styles.estado}>
-                    <Input
+                    <InputCustomMask
                         type="text"
                         text="Estado"
                         id="uf"

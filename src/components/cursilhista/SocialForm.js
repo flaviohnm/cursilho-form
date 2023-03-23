@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import Input from '../form/Input';
+import InputCustomMask from '../form/InputCustomMask';
 import Select from '../form/Select';
 
 
@@ -41,11 +42,12 @@ function SocialForm({ cursilhista, handleChange }) {
                 />
             )}
             {(cursilhista.estadocivil === '2') && (
-                <Input
+                <InputCustomMask
                     type="tel"
                     text="Telefone do Conjugê"
                     name="conjugePhoneNumber"
                     placeholder="XX-XXXXX-XXXX"
+                    mask={'99-99999-9999'}
                     handleOnchange={handleChange}
                     value={cursilhista.conjugePhoneNumber || ""}
                 />
@@ -58,11 +60,12 @@ function SocialForm({ cursilhista, handleChange }) {
                 handleOnchange={handleChange}
                 value={cursilhista.emergencyName || ""}
             />
-            <Input
+            <InputCustomMask
                 type="text"
                 text="Telefone do contato de Emergência"
                 name="emergencyPhoneNumber"
                 placeholder="XX-XXXXX-XXXX"
+                mask={'99-99999-9999'}s
                 handleOnchange={handleChange}
                 value={cursilhista.emergencyPhoneNumber || ""}
             />

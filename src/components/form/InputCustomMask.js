@@ -1,7 +1,7 @@
 import InputMask from 'react-input-mask';
 import styles from './Input.module.css';
 
-function InputCep({ type, text, name, placeholder, handleOnchange, value, onBlur }) {
+function InputCep({ type, text, name, placeholder, handleOnchange, value, onBlur, mask }) {
     return (
         <div className={styles.form_control}>
             <label htmlFor={name}>
@@ -15,7 +15,7 @@ function InputCep({ type, text, name, placeholder, handleOnchange, value, onBlur
                 onChange={handleOnchange}
                 value={value}
                 onBlur={onBlur}
-                mask="99999-999"
+                mask={mask}
             />
         </div>
     )

@@ -1,5 +1,6 @@
-import styles from '../cursilhista/CursilhistaForm.module.css'
-import Input from '../form/Input'
+import styles from '../cursilhista/CursilhistaForm.module.css';
+import Input from '../form/Input';
+import InputCustomMask from '../form/InputCustomMask';
 
 function UserForm({ cursilhista, handleChange }) {
 
@@ -21,11 +22,12 @@ function UserForm({ cursilhista, handleChange }) {
                 handleOnchange={handleChange}
                 value={cursilhista.displayName || ""}
             />
-            <Input
+            <InputCustomMask
                 type="text"
                 text="CPF"
                 name="cpf"
-                placeholder="Informe apenas os números do CPF"
+                mask={'999.999.999-99'}
+                placeholder="Digite apenas os números do CPF"
                 handleOnchange={handleChange}
                 value={cursilhista.cpf || ""}
             />
@@ -38,11 +40,12 @@ function UserForm({ cursilhista, handleChange }) {
                 value={cursilhista.email || ""}
             />
             <div className={styles.form_container_plus}>
-                <Input
+                <InputCustomMask
                     type="tel"
                     text="Telefone"
                     name="phoneNumber"
                     placeholder="XX-XXXXX-XXXX"
+                    mask={'99-99999-9999'}
                     handleOnchange={handleChange}
                     value={cursilhista.phoneNumber || ""}
                 />
