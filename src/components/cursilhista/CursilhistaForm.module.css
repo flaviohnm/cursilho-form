@@ -1,7 +1,20 @@
 .form_container {
   width: 500px;
   margin: 0 auto;
-  padding: 3em;
+  padding: 1.7em;
+}
+
+.form_container_plus {
+  display: flex;
+  justify-content: space-between;
+}
+
+.cidade {
+  width: 280px;
+}
+
+.estado {
+  width: 100px;
 }
 
 .form {

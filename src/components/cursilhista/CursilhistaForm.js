@@ -20,10 +20,10 @@ function CursilhistaForm({ handleSubmit, btnText, cursilhistaData }) {
     }
 
     const formComponents = [
-        <UserForm cursilhista={cursilhista} updateFieldHandler={updateFieldHandler} />,
-        <AddressForm cursilhista={cursilhista} updateFieldHandler={updateFieldHandler} />,
-        <SocialForm cursilhista={cursilhista} updateFieldHandler={updateFieldHandler} />,
-        <TransportForm cursilhista={cursilhista} updateFieldHandler={updateFieldHandler} />
+        <UserForm cursilhista={cursilhista} handleChange={handleChange} />,
+        <AddressForm cursilhista={cursilhista} handleChange={handleChange} />,
+        <SocialForm cursilhista={cursilhista} handleChange={handleChange} />,
+        <TransportForm cursilhista={cursilhista} handleChange={handleChange} />
     ]
 
 
@@ -33,6 +33,10 @@ function CursilhistaForm({ handleSubmit, btnText, cursilhistaData }) {
     const submit = (e) => {
         e.preventDefault()
         handleSubmit(cursilhista)
+    }
+
+    function handleChange(e) {
+        updateFieldHandler(e.target.name, e.target.value)
     }
 
     return (

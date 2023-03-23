@@ -1,6 +1,7 @@
+import styles from '../cursilhista/CursilhistaForm.module.css'
 import Input from '../form/Input'
 
-function UserForm({ cursilhista, submit, updateFieldHandler }) {
+function UserForm({ cursilhista, handleChange }) {
 
     return (
         <div>
@@ -9,7 +10,7 @@ function UserForm({ cursilhista, submit, updateFieldHandler }) {
                 text="Nome Completo"
                 name="fullName"
                 placeholder="Digite o nome completo"
-                handleOnchange={(e) => updateFieldHandler("fullName", e.target.value)}
+                handleOnchange={handleChange}
                 value={cursilhista.fullName || ""}
             />
             <Input
@@ -17,7 +18,7 @@ function UserForm({ cursilhista, submit, updateFieldHandler }) {
                 text="Nome do Crachá"
                 name="displayName"
                 placeholder="Digite o nome que será usado no crachá"
-                handleOnchange={(e) => updateFieldHandler("displayName", e.target.value)}
+                handleOnchange={handleChange}
                 value={cursilhista.displayName || ""}
             />
             <Input
@@ -25,7 +26,7 @@ function UserForm({ cursilhista, submit, updateFieldHandler }) {
                 text="CPF"
                 name="cpf"
                 placeholder="Informe apenas os números do CPF"
-                handleOnchange={(e) => updateFieldHandler("cpf", e.target.value)}
+                handleOnchange={handleChange}
                 value={cursilhista.cpf || ""}
             />
             <Input
@@ -33,24 +34,26 @@ function UserForm({ cursilhista, submit, updateFieldHandler }) {
                 text="E-mail"
                 name="email"
                 placeholder="Digite o seu e-mail"
-                handleOnchange={(e) => updateFieldHandler("email", e.target.value)}
+                handleOnchange={handleChange}
                 value={cursilhista.email || ""}
             />
-            <Input
-                type="tel"
-                text="Telefone"
-                name="phoneNumber"
-                placeholder="XX-XXXXX-XXXX"
-                handleOnchange={(e) => updateFieldHandler("phoneNumber", e.target.value)}
-                value={cursilhista.phoneNumber || ""}
-            />
-            <Input
-                type="date"
-                text="Data de Aniversário"
-                name="birthDate"
-                handleOnchange={(e) => updateFieldHandler("birthDate", e.target.value)}
-                value={cursilhista.birthDate || ""}
-            />
+            <div className={styles.form_container_plus}>
+                <Input
+                    type="tel"
+                    text="Telefone"
+                    name="phoneNumber"
+                    placeholder="XX-XXXXX-XXXX"
+                    handleOnchange={handleChange}
+                    value={cursilhista.phoneNumber || ""}
+                />
+                <Input
+                    type="date"
+                    text="Data de Nascimento"
+                    name="birthDate"
+                    handleOnchange={handleChange}
+                    value={cursilhista.birthDate || ""}
+                />
+            </div>
         </div>
     )
 }

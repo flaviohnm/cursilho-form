@@ -1,12 +1,13 @@
+import InputMask from 'react-input-mask';
 import styles from './Input.module.css';
 
-function Input({ type, text, name, placeholder, handleOnchange, value, onBlur, maxlength, minLength }) {
+function InputCep({ type, text, name, placeholder, handleOnchange, value, onBlur }) {
     return (
         <div className={styles.form_control}>
             <label htmlFor={name}>
                 {text}:
             </label>
-            <input
+            <InputMask
                 type={type}
                 name={name}
                 id={name}
@@ -14,10 +15,11 @@ function Input({ type, text, name, placeholder, handleOnchange, value, onBlur, m
                 onChange={handleOnchange}
                 value={value}
                 onBlur={onBlur}
+                mask="99999-999"
             />
         </div>
     )
 
 }
 
-export default Input
+export default InputCep

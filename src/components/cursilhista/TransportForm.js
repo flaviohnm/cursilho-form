@@ -1,13 +1,14 @@
 import { useEffect, useState } from 'react';
 import Select from '../form/Select';
 
-function TransportForm({ cursilhista, submit, updateFieldHandler }) {
+function TransportForm({ cursilhista, handleChange }) {
 
-    const [transport, setTransport] = useState([])
+    const [transportes, setTransportes] = useState([])
+    const [igrejas, setIgrejas] = useState([])
 
 
     useEffect(() => {
-        fetch("http://localhost:3002/transport", {
+        fetch("http://localhost:3002/transportes", {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -15,7 +16,21 @@ function TransportForm({ cursilhista, submit, updateFieldHandler }) {
         })
             .then((resp) => resp.json())
             .then((data) => {
-                setTransport(data)
+                setTransportes(data)
+            })
+            .catch((err) => console.log(err))
+    }, [])
+
+    useEffect(() => {
+        fetch("http://localhost:3002/igrejas", {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+            .then((resp) => resp.json())
+            .then((data) => {
+                setIgrejas(data)
             })
             .catch((err) => console.log(err))
     }, [])
@@ -23,12 +38,21 @@ function TransportForm({ cursilhista, submit, updateFieldHandler }) {
     return (
         <div >
             <Select
-                name="transport"
-                text="Transporte"
-                options={transport}
-                handleOnchange={(e) => updateFieldHandler("transport", e.target.value)}
-                value={cursilhista.transport || ""}
+                text="Sobre o transporte"
+                name="transporte"
+                options={transportes}
+                handleOnchange={handleChange}
+                value={cursilhista.transporte || ""}
             />
+            {(cursilhista.transporte === '1') && (
+                <Select
+                    text="De onde você irá sair"
+                    name="igreja"
+                    options={igrejas}
+                    handleOnchange={handleChange}
+                    value={cursilhista.igreja || ""}
+                />
+            )}
         </div>
     )
 

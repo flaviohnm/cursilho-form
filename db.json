@@ -17,17 +17,17 @@
       "name": "Viuvo"
     }
   ],
-  "transport": [
+  "transportes": [
     {
       "id": 1,
-      "name": "Onibus"
+      "name": "Ônibus da igreja"
     },
     {
       "id": 2,
-      "name": "Próprio"
+      "name": "Particular"
     }
   ],
-  "igreja": [
+  "igrejas": [
     {
       "id": 1,
       "name": "PAES PIEDADE"

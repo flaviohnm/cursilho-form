@@ -3,7 +3,7 @@ import Input from '../form/Input';
 import Select from '../form/Select';
 
 
-function SocialForm({ cursilhista, updateFieldHandler }) {
+function SocialForm({ cursilhista, handleChange }) {
 
     const [estadoCivil, setEstadoCivil] = useState([])
 
@@ -21,14 +21,13 @@ function SocialForm({ cursilhista, updateFieldHandler }) {
             .catch((err) => console.log(err))
     }, [])
 
-
     return (
         <div>
             <Select
                 name="estadocivil"
-                text="Estado Civil"
+                text="Informe o seu estado civil"
                 options={estadoCivil}
-                handleOnchange={(e) => updateFieldHandler("estadocivil", e.target.value)}
+                handleOnchange={handleChange}
                 value={cursilhista.estadocivil || ""}
             />
             {(cursilhista.estadocivil === '2') && (
@@ -37,7 +36,7 @@ function SocialForm({ cursilhista, updateFieldHandler }) {
                     text="Nome do Conjugê"
                     name="conjugeName"
                     placeholder="Informe o nome do conjugê"
-                    handleOnchange={(e) => updateFieldHandler("conjugeName", e.target.value)}
+                    handleOnchange={handleChange}
                     value={cursilhista.conjugeName || ""}
                 />
             )}
@@ -47,7 +46,7 @@ function SocialForm({ cursilhista, updateFieldHandler }) {
                     text="Telefone do Conjugê"
                     name="conjugePhoneNumber"
                     placeholder="XX-XXXXX-XXXX"
-                    handleOnchange={(e) => updateFieldHandler("conjugePhoneNumber", e.target.value)}
+                    handleOnchange={handleChange}
                     value={cursilhista.conjugePhoneNumber || ""}
                 />
             )}
@@ -56,7 +55,7 @@ function SocialForm({ cursilhista, updateFieldHandler }) {
                 text="Nome do contato de Emergência"
                 name="emergencyName"
                 placeholder="Informe o nome do contato de emergência"
-                handleOnchange={(e) => updateFieldHandler("emergencyName", e.target.value)}
+                handleOnchange={handleChange}
                 value={cursilhista.emergencyName || ""}
             />
             <Input
@@ -64,7 +63,7 @@ function SocialForm({ cursilhista, updateFieldHandler }) {
                 text="Telefone do contato de Emergência"
                 name="emergencyPhoneNumber"
                 placeholder="XX-XXXXX-XXXX"
-                handleOnchange={(e) => updateFieldHandler("emergencyPhoneNumber", e.target.value)}
+                handleOnchange={handleChange}
                 value={cursilhista.emergencyPhoneNumber || ""}
             />
         </div>

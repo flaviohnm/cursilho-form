@@ -1,24 +1,41 @@
 import { useState } from 'react';
+import styles from '../cursilhista/CursilhistaForm.module.css';
 import Input from '../form/Input';
+import InputCep from '../form/InputCep';
 import Loading from '../layout/Loading';
+import Message from '../layout/Message';
 
-function AddressForm({ cursilhista, updateFieldHandler }) {
 
-    //const [ceps, setCeps] = useState(null)
+function AddressForm({ cursilhista, handleChange }) {
+
     const [removeLoading, setRemoveLoading] = useState(false)
+    const [message, setMessage] = useState()
+    const [type, setType] = useState()
 
     function preecherForm(data) {
         cursilhista.logradouro = data.logradouro;
         cursilhista.bairro = data.bairro
-        cursilhista.cidade =data.localidade;
+        cursilhista.cidade = data.localidade;
         cursilhista.uf = data.uf;
+        cursilhista.numero = '';
+        cursilhista.complemento = '';
     }
 
+    function limparForm(e) {
+        cursilhista.cep = ''
+        cursilhista.logradouro = ''
+        cursilhista.bairro = ''
+        cursilhista.cidade = ''
+        cursilhista.uf = ''
+        cursilhista.numero = ''
+        cursilhista.complemento = ''
+    }
 
     const buscaCEP = (e) => {
         setRemoveLoading('');
+        setMessage('');
         const cep = e.target.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');
-        if (cep !== "" && cep.length === 8) {
+        if (cep.length === 8) {
             setRemoveLoading(false)
             setTimeout(() => {
                 fetch(`https://viacep.com.br/ws/${cep}/json`)
@@ -30,20 +47,29 @@ function AddressForm({ cursilhista, updateFieldHandler }) {
                         console.log("Erro: " + err);
                     })
                     .finally(() => setRemoveLoading(false))
-            }, 50)
-            setRemoveLoading(true)
+                setRemoveLoading(true)
+            }, 100)
+        } else if (cep.length !== 8) {
+            setMessage('CEP incompleto, tente novamente!');
+            setType('error');
+            limparForm();
+        }else {
+            setMessage('CEP não encontrado');
+            setType('error');
+            limparForm();
         }
     }
 
     return (
         <div>
             {removeLoading && <Loading />}
-            <Input
+            {message && <Message type={type} msg={message} />}
+            <InputCep
                 type="text"
                 text="CEP"
                 name="cep"
                 placeholder="Digite o CEP, apenas números"
-                handleOnchange={(e) => updateFieldHandler("cep", e.target.value)}
+                handleOnchange={handleChange}
                 onBlur={buscaCEP}
                 value={cursilhista.cep || ""}
             />
@@ -52,53 +78,61 @@ function AddressForm({ cursilhista, updateFieldHandler }) {
                 text="Rua"
                 id="logradouro"
                 name="logradouro"
-                placeholder="Informe o nome da rua"
-                handleOnchange={(e) => updateFieldHandler("logradouro", e.target.value)}
+                placeholder="Avenida, rua, quadra..."
+                handleOnchange={handleChange}
                 value={cursilhista.logradouro || ""}
             />
-            <Input
-                type="text"
-                text="Número"
-                name="numero"
-                placeholder="Informe o número"
-                handleOnchange={(e) => updateFieldHandler("number", e.target.value)}
-                value={cursilhista.number || ""}
-            />
-            <Input
-                type="text"
-                text="Complemento"
-                name="complemento"
-                placeholder="Informe o complemento"
-                handleOnchange={(e) => updateFieldHandler("complement", e.target.value)}
-                value={cursilhista.complemento || ""}
-            />
+            <div className={styles.form_container_plus}>
+                <Input
+                    type="text"
+                    text="Número"
+                    name="numero"
+                    placeholder="Informe o número"
+                    handleOnchange={handleChange}
+                    value={cursilhista.numero || ""}
+                />
+                <Input
+                    type="text"
+                    text="Complemento"
+                    name="complemento"
+                    placeholder="Apartamento..."
+                    handleOnchange={handleChange}
+                    value={cursilhista.complemento || ""}
+                />
+            </div>
             <Input
                 type="text"
                 text="Bairro"
                 id="bairro"
                 name="bairro"
-                placeholder="Informe o nome o Bairro"
-                handleOnchange={(e) => updateFieldHandler("bairro", e.target.value)}
+                placeholder="Nome do bairro"
+                handleOnchange={handleChange}
                 value={cursilhista.bairro || ""}
             />
-            <Input
-                type="text"
-                text="Cidade"
-                id="cidade"
-                name="cidade"
-                placeholder="Informe o nome da cidade"
-                handleOnchange={(e) => updateFieldHandler("localidade", e.target.value)}
-                value={cursilhista.cidade || ""}
-            />
-            <Input
-                type="text"
-                text="Estado"
-                id="uf"
-                name="uf"
-                placeholder="Informe o nome da cidade"
-                handleOnchange={(e) => updateFieldHandler("uf", e.target.value)}
-                value={cursilhista.uf || ""}
-            />
+            <div className={styles.form_container_plus}>
+                <div className={styles.cidade}>
+                    <Input
+                        type="text"
+                        text="Cidade"
+                        id="cidade"
+                        name="cidade"
+                        placeholder="Nome da cidade"
+                        handleOnchange={handleChange}
+                        value={cursilhista.cidade || ""}
+                    />
+                </div>
+                <div className={styles.estado}>
+                    <Input
+                        type="text"
+                        text="Estado"
+                        id="uf"
+                        name="uf"
+                        placeholder="uf"
+                        handleOnchange={handleChange}
+                        value={cursilhista.uf || ""}
+                    />
+                </div>
+            </div>
         </div>
     )
 
