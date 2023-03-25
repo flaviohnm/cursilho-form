@@ -9,25 +9,42 @@ function UserForm({ cursilhista, handleChange }) {
 
     const [message, setMessage] = useState('')
     const [type, setType] = useState('')
-    const [isValidCPF, setIsValidCPF] = useState('')
+    const [currenteCPF, setCurrentCPF] = useState('')
 
-    const validaCPF = (e) => {
-        setIsValidCPF('');
-    var cpfString = cpf.strip(e.target.value)
-        if (cpf.isValid(cpfString)) {
-            setIsValidCPF(true)
+    function limpaCPF() {
+        cursilhista.cpf = ''
+    }
+
+    function validaCPF(cpfValue) {
+        if (cpf.isValid(cpfValue)) {
+            setCurrentCPF(cpfValue)
         }
         else {
-            console.log('invalido')
             setMessage('CPF Inválido');
             setType('error');
-            setIsValidCPF(false);
+            limpaCPF();
         }
     }
 
+    const handleCPF = (e) => {
+        setMessage('');
+        setType('');
+        var newCPF = cpf.strip(e.target.value)
+        if (currenteCPF !== newCPF) {
+            if (newCPF.length === 11) {
+                validaCPF(newCPF)
+            } else {
+                setMessage('CPF incompleto');
+                setType('error');
+                limpaCPF();
+            }
+        }
+    }
+
+
     return (
         <div>
-            {(isValidCPF === false) && <Message type={type} msg={message} />}
+            {message && <Message type={type} msg={message} />}
             <Input
                 type="text"
                 text="Nome Completo"
@@ -51,8 +68,8 @@ function UserForm({ cursilhista, handleChange }) {
                 name="cpf"
                 mask={'999.999.999-99'}
                 placeholder="Digite apenas os números do CPF"
-                onBlur={validaCPF}
                 handleOnchange={handleChange}
+                onBlur={handleCPF}
                 value={cursilhista.cpf}
             />
             <Input
