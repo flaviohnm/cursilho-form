@@ -11,7 +11,6 @@ function AddressForm({ cursilhista, handleChange }) {
     const [removeLoading, setRemoveLoading] = useState(false)
     const [message, setMessage] = useState('')
     const [type, setType] = useState('')
-    const [currentCep, setCurrentCep] = useState('')
 
     function preecherForm(data) {
         cursilhista.logradouro = data.logradouro;
@@ -43,7 +42,6 @@ function AddressForm({ cursilhista, handleChange }) {
                     .then(data => {
                         if (!data.erro === true) {
                             preecherForm(data);
-                            setCurrentCep(cep)
                         } else {
                             setMessage('CEP não encontrado!');
                             setType('error');
@@ -55,7 +53,7 @@ function AddressForm({ cursilhista, handleChange }) {
                     })
                     .finally(() => setRemoveLoading(false))
                 setRemoveLoading(true)
-            }, 300)
+            }, 150)
         } else {
             setMessage('CEP inválido');
             setType('error');
@@ -66,9 +64,7 @@ function AddressForm({ cursilhista, handleChange }) {
     const validaCep = (e) => {
         setMessage('');
         var validCep = e.target.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');
-        if (currentCep !== validCep) {
-            buscaCEP(validCep)
-        }
+        buscaCEP(validCep)
     }
 
 

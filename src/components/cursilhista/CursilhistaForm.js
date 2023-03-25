@@ -20,10 +20,10 @@ function CursilhistaForm({ handleSubmit, btnText, cursilhistaData }) {
     }
 
     const formComponents = [
-        <UserForm cursilhista={cursilhista} handleChange={handleChange} />,
-        <AddressForm cursilhista={cursilhista} handleChange={handleChange} />,
-        <SocialForm cursilhista={cursilhista} handleChange={handleChange} />,
-        <TransportForm cursilhista={cursilhista} handleChange={handleChange} />
+        <UserForm cursilhista={cursilhista} handleChange={handleChange}  />,
+        <AddressForm cursilhista={cursilhista} handleChange={handleChange}  />,
+        <SocialForm cursilhista={cursilhista} handleChange={handleChange}  />,
+        <TransportForm cursilhista={cursilhista} handleChange={handleChange}  />
     ]
 
 
