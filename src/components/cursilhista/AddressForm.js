@@ -9,8 +9,9 @@ import Message from '../layout/Message';
 function AddressForm({ cursilhista, handleChange }) {
 
     const [removeLoading, setRemoveLoading] = useState(false)
-    const [message, setMessage] = useState()
-    const [type, setType] = useState()
+    const [message, setMessage] = useState('')
+    const [type, setType] = useState('')
+    const [currentCep, setCurrentCep] = useState('')
 
     function preecherForm(data) {
         cursilhista.logradouro = data.logradouro;
@@ -21,7 +22,7 @@ function AddressForm({ cursilhista, handleChange }) {
         cursilhista.complemento = '';
     }
 
-    function limparForm(e) {
+    function limparForm() {
         cursilhista.cep = ''
         cursilhista.logradouro = ''
         cursilhista.bairro = ''
@@ -31,34 +32,46 @@ function AddressForm({ cursilhista, handleChange }) {
         cursilhista.complemento = ''
     }
 
-    const buscaCEP = (e) => {
+    function buscaCEP(cep) {
         setRemoveLoading('');
         setMessage('');
-        const cep = e.target.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');
         if (cep.length === 8) {
             setRemoveLoading(false)
             setTimeout(() => {
                 fetch(`https://viacep.com.br/ws/${cep}/json`)
                     .then((resp) => resp.json())
                     .then(data => {
-                        preecherForm(data);
+                        if (!data.erro === true) {
+                            preecherForm(data);
+                            setCurrentCep(cep)
+                        } else {
+                            setMessage('CEP não encontrado!');
+                            setType('error');
+                            limparForm();
+                        }
                     },)
                     .catch((err) => {
                         console.log("Erro: " + err);
                     })
                     .finally(() => setRemoveLoading(false))
                 setRemoveLoading(true)
-            }, 100)
-        } else if (cep.length !== 8) {
-            setMessage('CEP incompleto, tente novamente!');
-            setType('error');
-            limparForm();
-        }else {
-            setMessage('CEP não encontrado');
+            }, 300)
+        } else {
+            setMessage('CEP inválido');
             setType('error');
             limparForm();
         }
     }
+
+    const validaCep = (e) => {
+        setMessage('');
+        var validCep = e.target.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');
+        if (currentCep !== validCep) {
+            buscaCEP(validCep)
+        }
+    }
+
+
 
     return (
         <div>
@@ -71,7 +84,7 @@ function AddressForm({ cursilhista, handleChange }) {
                 mask={'99999-999'}
                 placeholder="Digite o CEP, apenas números"
                 handleOnchange={handleChange}
-                onBlur={buscaCEP}
+                onBlur={validaCep}
                 value={cursilhista.cep || ""}
             />
             <Input

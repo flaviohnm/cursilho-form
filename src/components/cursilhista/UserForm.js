@@ -1,16 +1,39 @@
+import { cpf } from 'cpf-cnpj-validator';
+import { useState } from 'react';
 import styles from '../cursilhista/CursilhistaForm.module.css';
 import Input from '../form/Input';
 import InputCustomMask from '../form/InputCustomMask';
+import Message from '../layout/Message';
 
 function UserForm({ cursilhista, handleChange }) {
 
+    const [message, setMessage] = useState('')
+    const [type, setType] = useState('')
+    const [isValidCPF, setIsValidCPF] = useState('')
+
+    const validaCPF = (e) => {
+        setIsValidCPF('');
+    var cpfString = cpf.strip(e.target.value)
+        if (cpf.isValid(cpfString)) {
+            setIsValidCPF(true)
+        }
+        else {
+            console.log('invalido')
+            setMessage('CPF Inválido');
+            setType('error');
+            setIsValidCPF(false);
+        }
+    }
+
     return (
         <div>
+            {(isValidCPF === false) && <Message type={type} msg={message} />}
             <Input
                 type="text"
                 text="Nome Completo"
                 name="fullName"
                 placeholder="Digite o nome completo"
+                required={'required'}
                 handleOnchange={handleChange}
                 value={cursilhista.fullName || ""}
             />
@@ -28,8 +51,9 @@ function UserForm({ cursilhista, handleChange }) {
                 name="cpf"
                 mask={'999.999.999-99'}
                 placeholder="Digite apenas os números do CPF"
+                onBlur={validaCPF}
                 handleOnchange={handleChange}
-                value={cursilhista.cpf || ""}
+                value={cursilhista.cpf}
             />
             <Input
                 type="email"
@@ -53,6 +77,7 @@ function UserForm({ cursilhista, handleChange }) {
                     type="date"
                     text="Data de Nascimento"
                     name="birthDate"
+                    required={'required'}
                     handleOnchange={handleChange}
                     value={cursilhista.birthDate || ""}
                 />
