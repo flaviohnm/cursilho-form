@@ -36,8 +36,6 @@ function UserForm({ cursilhista, handleChange, validateInput }) {
         if (currenteCPF !== newCPF) {
             if (newCPF.length === 11) {
                 validaCPF(newCPF)
-                setMessage('');
-                setType('');
             } else {
                 setMessage('CPF incompleto');
                 setType('error');
