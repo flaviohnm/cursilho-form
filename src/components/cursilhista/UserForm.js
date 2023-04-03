@@ -17,6 +17,13 @@ function UserForm({ cursilhista, handleChange, validateInput }) {
     function limpaEmail() {
         cursilhista.email = ''
     }
+    function limpaFullName() {
+        cursilhista.email = ''
+    }
+    function limpaDisplayName() {
+        cursilhista.email = ''
+    }
+
 
     function validaCPF(cpfValue) {
         if (cpf.isValid(cpfValue)) {
@@ -69,6 +76,49 @@ function UserForm({ cursilhista, handleChange, validateInput }) {
         }
     }
 
+    function validaFullName(name) {
+        if (name.length < 10) {
+            setMessage('Nome Completo precisa ter mais que 10 caracteres');
+            setType('error');
+            limpaFullName();
+        }
+    }
+
+    const handleFullName = (e) => {
+        setMessage('');
+        setType('');
+        var newName = e.target.value
+        if (newName === '') {
+            setMessage('Por favor, preencha o seu nome completo!');
+            setType('error');
+            limpaFullName();
+        } else {
+            validaFullName(newName)
+        }
+    }
+
+    function validaDisplayName(displayName) {
+        if (displayName.length < 3) {
+            setMessage('Nome Completo precisa ter mais que 3 caracteres');
+            setType('error');
+            limpaDisplayName();
+        }
+    }
+
+    const handleDisplayName = (e) => {
+        setMessage('');
+        setType('');
+        var displayName = e.target.value
+        if (displayName === '') {
+            setMessage('Informe como você quer ser chamado(a)');
+            setType('error');
+            limpaDisplayName();
+        } else {
+            validaDisplayName(displayName)
+        }
+    }
+
+
 
     return (
         <div>
@@ -79,6 +129,7 @@ function UserForm({ cursilhista, handleChange, validateInput }) {
                 name="fullName"
                 placeholder="Digite o nome completo"
                 required={true}
+                onBlur={handleFullName}
                 handleOnchange={handleChange}
                 value={cursilhista.fullName || ""}
             />
@@ -87,6 +138,7 @@ function UserForm({ cursilhista, handleChange, validateInput }) {
                 text="Nome do Crachá"
                 name="displayName"
                 placeholder="Digite o nome que será usado no crachá"
+                onBlur={handleDisplayName}
                 handleOnchange={handleChange}
                 value={cursilhista.displayName || ""}
             />
@@ -132,5 +184,4 @@ function UserForm({ cursilhista, handleChange, validateInput }) {
         </div>
     )
 }
-
 export default UserForm
