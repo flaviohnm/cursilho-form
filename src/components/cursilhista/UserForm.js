@@ -5,7 +5,7 @@ import Input from '../form/Input';
 import InputCustomMask from '../form/InputCustomMask';
 import Message from '../layout/Message';
 
-function UserForm({ cursilhista, handleChange, validateInput }) {
+function UserForm({ cursilhista, handleChange }) {
 
     const [message, setMessage] = useState('')
     const [type, setType] = useState('')
@@ -18,11 +18,15 @@ function UserForm({ cursilhista, handleChange, validateInput }) {
         cursilhista.email = ''
     }
     function limpaFullName() {
-        cursilhista.email = ''
+        cursilhista.fullName = ''
     }
     function limpaDisplayName() {
-        cursilhista.email = ''
+        cursilhista.displayName = ''
     }
+    function limpaPhoneNumber() {
+        cursilhista.phoneNumber = ''
+    }
+
 
 
     function validaCPF(cpfValue) {
@@ -118,6 +122,26 @@ function UserForm({ cursilhista, handleChange, validateInput }) {
         }
     }
 
+    function validaPhoneNumber(phoneNumber) {
+        if (phoneNumber.length < 13) {
+            setMessage('O numero de telefone está incompleto');
+            setType('error');
+            limpaPhoneNumber();
+        }
+    }
+
+    const handlePhoneNumber = (e) => {
+        setMessage('');
+        setType('');
+        var phone = cpf.strip(e.target.value)
+        if (phone === '') {
+            setMessage('Por favor informe o número de telefone');
+            setType('error');
+        } else {
+            validaPhoneNumber(phone)
+        }
+    }
+
 
 
     return (
@@ -150,7 +174,7 @@ function UserForm({ cursilhista, handleChange, validateInput }) {
                 placeholder="Digite apenas os números do CPF"
                 handleOnchange={handleChange}
                 onBlur={handleCPF}
-                required={true}
+                required={'required'}
                 value={cursilhista.cpf}
             />
             <InputCustomMask
@@ -170,6 +194,7 @@ function UserForm({ cursilhista, handleChange, validateInput }) {
                     placeholder="XX-XXXXX-XXXX"
                     mask={'99-99999-9999'}
                     handleOnchange={handleChange}
+                    onBlur={handlePhoneNumber}
                     value={cursilhista.phoneNumber || ""}
                 />
                 <Input
