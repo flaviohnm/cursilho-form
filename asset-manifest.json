@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "/cursilho-form/static/css/main.ee7258df.css",
+    "main.js": "/cursilho-form/static/js/main.663be9e3.js",
+    "index.html": "/cursilho-form/index.html",
+    "static/media/loading.svg": "/cursilho-form/static/media/loading.cb532fb55bf84419963cc55778925f86.svg",
+    "main.ee7258df.css.map": "/cursilho-form/static/css/main.ee7258df.css.map",
+    "main.663be9e3.js.map": "/cursilho-form/static/js/main.663be9e3.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.ee7258df.css",
+    "static/js/main.663be9e3.js"
+  ]
+}
