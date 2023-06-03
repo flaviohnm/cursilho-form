@@ -1,37 +1,42 @@
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { v4 as uuidv4 } from 'uuid'
 import CursilhistaForm from '../cursilhista/CursilhistaForm'
+import Message from '../layout/Message'
 import styles from './NewInscription.module.css'
 
-function NewProject() {
+function NewInscription() {
+
     const navigate = useNavigate()
 
-    function createPost(projetc) {
-        // initialize cost and services
-        projetc.cost = 0
-        projetc.services = []
+    const [cursilhistaMessage, setCursilhistaMessage] = useState('')
 
-        fetch('http://localhost:3001/projects', {
+    function createPost(cursilhista) {
+
+        cursilhista.id = uuidv4()
+
+        fetch('http://localhost:3002/cursilhistas', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(projetc),
+            body: JSON.stringify(cursilhista),
         }).then((resp) => resp.json())
             .then((data) => {
                 console.log(data)
-                //redirect
-                navigate('/',{state:{message:'Inscrição realizada com Sucesso!'}})
+                setCursilhistaMessage('Inscrição realizada com sucesso!')
+                navigate('/')
             })
             .catch((err) => console.log(err))
     }
 
     return (
-        <div className={styles.newproject_container}>
+        <div className={styles.newinscription_container}>
             <h1>Formulário de Inscrição</h1>
-            <p>Dados Pessoais</p>
+            {cursilhistaMessage && <Message type="success" msg={cursilhistaMessage} />}
             <CursilhistaForm handleSubmit={createPost} btnText="enviar" />
         </div>
     )
 }
 
-export default NewProject
+export default NewInscription

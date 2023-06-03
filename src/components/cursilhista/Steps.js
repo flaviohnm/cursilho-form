@@ -1,4 +1,3 @@
-import { MdContactEmergency } from 'react-icons/md'
 import { RiCarFill, RiMapPinFill, RiTeamFill, RiUserFill } from 'react-icons/ri'
 import './Steps.css'
 
@@ -16,9 +15,6 @@ function Steps({ currentStep }) {
                 <RiTeamFill />
             </div>
             <div className={`step ${currentStep >= 3 ? "active" : ""}`}>
-                <MdContactEmergency />
-            </div>
-            <div className={`step ${currentStep >= 4 ? "active" : ""}`}>
                 <RiCarFill />
             </div>
         </div>
